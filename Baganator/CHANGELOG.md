@@ -1,7 +1,8 @@
 # Baganator
 
-## [824](https://github.com/TheMouseNest/Baganator/tree/824) (2026-09-15)
-[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/823...824) 
+## [825](https://github.com/TheMouseNest/Baganator/tree/825) (2026-09-17)
+[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/824...825) 
 
-- EllesmereUI Skin: Fix searches not fading not matching items  
-- Experimental EllesmereUI skin  
+- Fixes  
+- Tag as supporting Forever  
+- Working on Forever  

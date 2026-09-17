@@ -54,8 +54,7 @@ end
 local function SetConstants()
   if addonTable.Constants.IsRetail then
     addonTable.Constants.ButtonFrameOffset = 1
-  end
-  if addonTable.Constants.IsClassic then
+  else
     addonTable.Constants.ButtonFrameOffset = 0
   end
 end
