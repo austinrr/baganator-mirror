@@ -1,8 +1,6 @@
 # Baganator
 
-## [825](https://github.com/TheMouseNest/Baganator/tree/825) (2026-09-17)
-[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/824...825) 
+## [826](https://github.com/TheMouseNest/Baganator/tree/826) (2026-09-18)
+[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/825...826) 
 
-- Fixes  
-- Tag as supporting Forever  
-- Working on Forever  
+- Forever: Skin fixes  
