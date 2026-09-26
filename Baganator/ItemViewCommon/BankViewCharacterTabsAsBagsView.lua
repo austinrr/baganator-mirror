@@ -247,7 +247,7 @@ function BaganatorItemViewCommonBankViewCharacterTabsAsBagsViewMixin:ShowTab(cha
 
   if self.BankMissingHint:IsShown() then
     if self.isLive and C_Bank.CanPurchaseBankTab(Enum.BankType.Character) then
-      self.BankMissingHint:SetText(addonTable.Locales.CHARACTER_BANK_NOT_PURCHASED_HINT)
+      self.BankMissingHint:SetText(addonTable.Locales.CHARACTER_BANK_NOT_PURCHASED_FOREVER_HINT)
     elseif self.isLive and C_Bank.FetchBankLockedReason(Enum.BankType.Account) == Enum.BankLockedReason.BankDisabled then
       self.BankMissingHint:SetText(BANK_LOCKED_REASON_BANK_DISABLED)
     else

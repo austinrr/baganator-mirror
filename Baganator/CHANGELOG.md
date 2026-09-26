@@ -1,9 +1,8 @@
 # Baganator
 
-## [830](https://github.com/TheMouseNest/Baganator/tree/830) (2026-09-26)
-[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/829...830) 
+## [831](https://github.com/TheMouseNest/Baganator/tree/831) (2026-09-26)
+[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/830...831) 
 
-- Forever: Show bags used in bank view  
-- Forever: Remove per-bag tabs on bank views  
-- Fixes  
-- Cleanup  
+- Forever: Update locale strings shown to reflect usage  
+- Retail: Fix buttons being offset from the top slightly  
+- Forever: Fix transferring from bags to bank (via button)  

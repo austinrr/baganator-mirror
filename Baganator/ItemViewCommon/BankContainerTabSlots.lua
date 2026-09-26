@@ -13,7 +13,7 @@ function addonTable.ItemViewCommon.BankContainerTabSlotsMixin:OnLoad()
     end)
     button:SetScript("OnEnter", function()
       GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
-      GameTooltip:SetText(LINK_FONT_COLOR:WrapTextInColorCode(addonTable.Locales.BUY_CHARACTER_BANK_TAB))
+      GameTooltip:SetText(LINK_FONT_COLOR:WrapTextInColorCode(addonTable.Locales.BUY_BANK_BAG_SLOT))
       local cost = C_Bank.FetchNextPurchasableBankTabData(self.purchaseKind).tabCost
       if cost > GetMoney() then
         GameTooltip:AddLine(addonTable.Locales.COST_X:format(RED_FONT_COLOR:WrapTextInColorCode(addonTable.Utilities.GetMoneyString(cost, true))))
