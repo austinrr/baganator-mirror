@@ -107,6 +107,8 @@ function BaganatorSearchWidgetMixin:OnLoad()
     addonTable.CallbackRegistry:TriggerEvent("SearchTextChanged", "")
   end)
 
+  addonTable.Gamepad.LinkButtons(self.SearchBox, "Right", self.SavedSearchesButton)
+
   self.GlobalSearchButton:Disable()
   self.GlobalSearchButton.Icon:SetDesaturated(true)
 
@@ -211,4 +213,11 @@ function BaganatorSearchWidgetMixin:SetSpacing(sideSpacing)
     self.GlobalSearchButton:Hide()
     self.HelpButton:Hide()
   end
+end
+
+function BaganatorSearchWidgetMixin:LinkDown(button)
+  addonTable.Gamepad.LinkButtons(self.SearchBox, "Down", button)
+  addonTable.Gamepad.OneWayLink(self.SavedSearchesButton, "Down", button)
+  addonTable.Gamepad.OneWayLink(self.GlobalSearchButton, "Down", button)
+  addonTable.Gamepad.OneWayLink(self.HelpButton, "Down", button)
 end

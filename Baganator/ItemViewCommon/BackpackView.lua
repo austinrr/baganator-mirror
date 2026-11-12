@@ -25,6 +25,12 @@ function BaganatorItemViewCommonBackpackViewMixin:OnLoad()
     self.layoutType = "ButtonFrameTemplateNoPortrait"
     self.FrameGlow = CreateFrame("Frame", nil, self, "FrameGlowTemplate")
   end
+  for _, b in ipairs(self.AllFixedButtons) do
+    addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget)
+  end
+  for _, b in ipairs(self.TopButtons) do
+    addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget.SearchBox)
+  end
 
   self.liveItemButtonPool = addonTable.ItemViewCommon.GetLiveItemButtonPool(self)
 
@@ -139,7 +145,6 @@ function BaganatorItemViewCommonBackpackViewMixin:OnShow()
   if addonTable.Constants.IsGamepadInUse then
     C_Timer.After(0, function()
       GamepadMode.FrameControlsManager:FrameShown(self)
-      GamepadMode.FrameControlsManager:SetUIFocusState(true)
     end)
   end
 end
@@ -228,6 +233,7 @@ function BaganatorItemViewCommonBackpackViewMixin:UpdateForCharacter(character, 
 
   self.SortButton:SetShown(addonTable.Utilities.ShouldShowSortButton() and isLive)
   self:UpdateTransferButton()
+  addonTable.Gamepad.LinkButtons(self.CustomiseButton, "Left", self.SortButton:IsShown() and self.SortButton or self.ToggleBagSlotsButton)
 
   local sideSpacing, topSpacing = addonTable.Utilities.GetSpacing()
 
@@ -294,11 +300,14 @@ function BaganatorItemViewCommonBackpackViewMixin:UpdateTransferButton()
   for _, info in ipairs(addonTable.BagTransfers) do
     if info.condition() then
       self.TransferButton:Show()
+      addonTable.Gamepad.LinkButtons(self.SortButton, "Left", self.TransferButton)
+      addonTable.Gamepad.LinkButtons(self.TransferButton, "Left", self.ToggleBagSlotsButton)
       self.TransferButton.tooltipText = info.tooltipText
       return
     end
   end
   self.TransferButton:Hide()
+  addonTable.Gamepad.LinkButtons(self.SortButton, "Left", self.ToggleBagSlotsButton)
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:IsTransferActive()
@@ -388,11 +397,11 @@ function BaganatorItemViewCommonBackpackViewMixin:GetExternalSortMethodName()
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:StartFocus()
-  -- TODO
+  self.FrameGlow:Show()
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:EndFocus()
-  -- TODO
+  self.FrameGlow:Hide()
 end
 
 if table.freeze then

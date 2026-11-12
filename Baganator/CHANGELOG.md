@@ -1,6 +1,8 @@
 # Baganator
 
-## [848](https://github.com/TheMouseNest/Baganator/tree/848) (2026-11-12)
-[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/847...848) 
+## [849](https://github.com/TheMouseNest/Baganator/tree/849) (2026-11-12)
+[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/848...849) 
 
-- More gamepad work  
+- Fix error when opening character panel  
+- Basic bag navigation with gamepad  
+- Remove potentially tainty call  

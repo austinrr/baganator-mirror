@@ -139,6 +139,8 @@ function BaganatorSingleViewBackpackViewMixin:UpdateForCharacter(character, isLi
     tAppendAll(self.AllButtons, self.AllFixedButtons)
     tAppendAll(self.AllButtons, self.TopButtons)
 
+    self.SearchWidget:LinkDown(activeBag.buttons[1])
+
     local lastButton = self.CurrencyButton
     lastButton:SetPoint("BOTTOM", self, "BOTTOM", 0, 6)
     lastButton:SetPoint("LEFT", self.Container, -2, 0)
