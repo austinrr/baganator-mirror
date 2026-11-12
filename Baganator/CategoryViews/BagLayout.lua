@@ -521,11 +521,10 @@ function addonTable.CategoryViews.BagLayoutMixin:Layout(allBags, bagWidth, bagTy
   local index = 1
   local function Next()
     if index > #calls then
-      local firstHit
       if #calls > 0 or refreshState[addonTable.Constants.RefreshReason.Cosmetic] or refreshState[addonTable.Constants.RefreshReason.ItemWidgets] or refreshState[addonTable.Constants.RefreshReason.ItemTextures] or refreshState[addonTable.Constants.RefreshReason.Layout] then
-        self.state.maxWidth, self.state.maxHeight, firstHit = self:Display(bagWidth, bagIndexes, bagTypes, CopyTable(self.state.composed), self.state.emptySlotsOrder, self.state.emptySlotsByType, bagWidth, sideSpacing, topSpacing)
+        self.state.maxWidth, self.state.maxHeight, self.firstHit = self:Display(bagWidth, bagIndexes, bagTypes, CopyTable(self.state.composed), self.state.emptySlotsOrder, self.state.emptySlotsByType, bagWidth, sideSpacing, topSpacing)
       end
-      callback(self.state.maxWidth, self.state.maxHeight, firstHit)
+      callback(self.state.maxWidth, self.state.maxHeight, self.firstHit)
     else
       index = index + 1
       calls[index - 1]()

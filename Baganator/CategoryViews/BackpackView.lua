@@ -217,6 +217,11 @@ function BaganatorCategoryViewBackpackViewMixin:UpdateForCharacter(character, is
 
     self.refreshState = {}
 
+    if self.showing then
+      addonTable.Gamepad.SetTargetButton(self, firstVisible)
+      self.showing = false
+    end
+
     self.SearchWidget:LinkDown(firstVisible)
 
     addonTable.CallbackRegistry:TriggerEvent("ViewComplete")

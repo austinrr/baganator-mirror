@@ -165,6 +165,9 @@ function BaganatorSearchWidgetMixin:OnLoad()
     end
   end)
 
+  self.SavedSearchesButton:HookScript("OnClick", function()
+  end)
+
   addonTable.Skins.AddFrame("SearchBox", self.SearchBox)
 
   addonTable.CallbackRegistry:RegisterCallback("SetButtonsShown", function(_, shown)
