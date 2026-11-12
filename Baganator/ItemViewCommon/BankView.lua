@@ -168,6 +168,12 @@ function BaganatorItemViewCommonBankViewMixin:OnShow()
     Select()
     C_Timer.After(0, Select) -- Necessary because if the tabs were only shown this frame they won't select properly
   end
+
+  if addonTable.Constants.IsGamepadInUse then
+    C_Timer.After(0, function()
+      GamepadMode.FrameControlsManager:FrameShown(self, nil, true)
+    end)
+  end
 end
 
 function BaganatorItemViewCommonBankViewMixin:OnHide()
@@ -260,6 +266,14 @@ end
 
 function BaganatorItemViewCommonBankViewMixin:GetExternalSortMethodName()
   return addonTable.Utilities.GetExternalSortMethodName()
+end
+
+function BaganatorItemViewCommonBankViewMixin:StartFocus()
+  -- TODO
+end
+
+function BaganatorItemViewCommonBankViewMixin:EndFocus()
+  -- TODO
 end
 
 if table.freeze then

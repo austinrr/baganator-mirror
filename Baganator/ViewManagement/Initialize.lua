@@ -125,7 +125,13 @@ local function SetupBackpackHooks()
   hooksecurefunc("ToggleBag", DirectToggleOnly)
 
   ToggleAllBags = ToggleBackpackView
-  ToggleBackpack_Combined = ToggleBackpackView
+  ToggleBackpack_Combined = function()
+    if backpackView:IsShown() or not InCombatLockdown() then
+      ToggleBackpackView()
+    else
+      UIErrorsFrame:AddMessage(addonTable.Locales.CANNOT_OPEN_BAGS_IN_COMBAT, 1.0, 0.1, 0.1, 1.0)
+    end
+  end
 
   -- Used to open the bags when a loot toast is clicked
   hooksecurefunc("OpenBag", function()

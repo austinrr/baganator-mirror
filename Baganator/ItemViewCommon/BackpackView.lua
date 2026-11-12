@@ -21,6 +21,11 @@ function BaganatorItemViewCommonBackpackViewMixin:OnLoad()
   self:SetClampedToScreen(true)
   self:SetUserPlaced(false)
 
+  if addonTable.Constants.IsGamepadInUse then
+    self.layoutType = "ButtonFrameTemplateNoPortrait"
+    self.FrameGlow = CreateFrame("Frame", nil, self, "FrameGlowTemplate")
+  end
+
   self.liveItemButtonPool = addonTable.ItemViewCommon.GetLiveItemButtonPool(self)
 
   self.Anchor = addonTable.ItemViewCommon.GetAnchorSetter(self, addonTable.Config.Options.MAIN_VIEW_POSITION)
@@ -130,13 +135,17 @@ function BaganatorItemViewCommonBackpackViewMixin:OnShow()
       self:CombineStacksAndSort()
     end)
   end
-  addonTable.ItemViewCommon.SetGamepadTrap(true, self)
   PlaySound(SOUNDKIT.IG_BACKPACK_OPEN);
+  if addonTable.Constants.IsGamepadInUse then
+    C_Timer.After(0, function()
+      GamepadMode.FrameControlsManager:FrameShown(self)
+      GamepadMode.FrameControlsManager:SetUIFocusState(true)
+    end)
+  end
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:OnHide()
   PlaySound(SOUNDKIT.IG_BACKPACK_CLOSE);
-  addonTable.ItemViewCommon.SetGamepadTrap(false, self)
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:SetLiveCharacter(character)
@@ -376,6 +385,14 @@ end
 
 function BaganatorItemViewCommonBackpackViewMixin:GetExternalSortMethodName()
   return addonTable.Utilities.GetExternalSortMethodName()
+end
+
+function BaganatorItemViewCommonBackpackViewMixin:StartFocus()
+  -- TODO
+end
+
+function BaganatorItemViewCommonBackpackViewMixin:EndFocus()
+  -- TODO
 end
 
 if table.freeze then
