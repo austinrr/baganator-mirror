@@ -26,9 +26,32 @@ if addonTable.Constants.IsGamepadInUse then
   function addonTable.Gamepad.OneWayLink(button1, direction, button2)
     SmartNavigation_AddJumpNavigationOverride(button1, directions[direction], button2)
   end
+  function addonTable.Gamepad.AnnounceShow(frame)
+    C_Timer.After(0, function()
+      GamepadMode.FrameControlsManager:FrameShown(frame)
+    end)
+  end
+  function addonTable.Gamepad.AnnounceHide(frame)
+  end
+
+  function addonTable.Gamepad.SetTargetButton(frame, target)
+    SmartNavigation:SetTargetButtonForFrame(frame, target)
+  end
+  function addonTable.Gamepad.SelectFirstButton(frame)
+    SmartNavigation:SelectFirstButton(frame, true)
+  end
+
 else
   function addonTable.Gamepad.LinkButtons(button1, direction, button2)
   end
   function addonTable.Gamepad.OneWayLink(button1, direction, button2)
+  end
+  function addonTable.Gamepad.AnnounceShow(frame)
+  end
+  function addonTable.Gamepad.AnnounceHide(frame)
+  end
+  function addonTable.Gamepad.SetTargetButton(frame, target)
+  end
+  function addonTable.Gamepad.SelectFirstButton(frame)
   end
 end

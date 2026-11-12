@@ -12,6 +12,14 @@ function BaganatorItemViewCommonBankViewMixin:OnLoad()
   self:SetClampedToScreen(true)
   self:SetUserPlaced(false)
 
+  if addonTable.Constants.IsGamepadInUse then
+    self.layoutType = "ButtonFrameTemplateNoPortrait"
+    self.FrameGlow = CreateFrame("Frame", nil, self, "FrameGlowTemplate")
+  end
+  for _, b in ipairs(self.AllFixedButtons) do
+    addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget)
+  end
+
   self.Anchor = addonTable.ItemViewCommon.GetAnchorSetter(self, addonTable.Config.Options.BANK_ONLY_VIEW_POSITION)
 
   self.tabPool = addonTable.ItemViewCommon.GetTabButtonPool(self)
@@ -269,11 +277,11 @@ function BaganatorItemViewCommonBankViewMixin:GetExternalSortMethodName()
 end
 
 function BaganatorItemViewCommonBankViewMixin:StartFocus()
-  -- TODO
+  self.FrameGlow:Show()
 end
 
 function BaganatorItemViewCommonBankViewMixin:EndFocus()
-  -- TODO
+  self.FrameGlow:Hide()
 end
 
 if table.freeze then

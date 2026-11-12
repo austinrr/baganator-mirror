@@ -1,8 +1,8 @@
 # Baganator
 
-## [849](https://github.com/TheMouseNest/Baganator/tree/849) (2026-11-12)
-[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/848...849) 
+## [850](https://github.com/TheMouseNest/Baganator/tree/850) (2026-11-12)
+[Full Changelog](https://github.com/TheMouseNest/Baganator/compare/849...850) 
 
-- Fix error when opening character panel  
-- Basic bag navigation with gamepad  
-- Remove potentially tainty call  
+- More gamepad improvements  
+- Gamepad: Glows on bank when focussed  
+- Polish  

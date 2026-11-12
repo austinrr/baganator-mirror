@@ -29,7 +29,7 @@ function BaganatorItemViewCommonBackpackViewMixin:OnLoad()
     addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget)
   end
   for _, b in ipairs(self.TopButtons) do
-    addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget.SearchBox)
+    addonTable.Gamepad.LinkButtons(b, "Down", self.SearchWidget.SearchBox)
   end
 
   self.liveItemButtonPool = addonTable.ItemViewCommon.GetLiveItemButtonPool(self)
@@ -142,15 +142,13 @@ function BaganatorItemViewCommonBackpackViewMixin:OnShow()
     end)
   end
   PlaySound(SOUNDKIT.IG_BACKPACK_OPEN);
-  if addonTable.Constants.IsGamepadInUse then
-    C_Timer.After(0, function()
-      GamepadMode.FrameControlsManager:FrameShown(self)
-    end)
-  end
+  addonTable.Gamepad.AnnounceShow(self)
+  self.showing = true
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:OnHide()
   PlaySound(SOUNDKIT.IG_BACKPACK_CLOSE);
+  addonTable.Gamepad.AnnounceHide(self)
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:SetLiveCharacter(character)

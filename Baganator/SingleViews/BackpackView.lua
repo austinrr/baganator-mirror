@@ -175,6 +175,11 @@ function BaganatorSingleViewBackpackViewMixin:UpdateForCharacter(character, isLi
     self.CurrencyWidget:UpdateCurrencyTextPositions(self.Container:GetWidth() - self.buttonsWidth - 10, self.Container:GetWidth())
   end
 
+  if self.showing then
+    addonTable.Gamepad.SetTargetButton(self, activeBag.buttons[1])
+    self.showing = false
+  end
+
   addonTable.CallbackRegistry:TriggerEvent("ViewComplete")
 
   if addonTable.Config.Get(addonTable.Config.Options.DEBUG_TIMERS) then
