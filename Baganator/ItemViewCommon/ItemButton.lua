@@ -773,12 +773,13 @@ do
   monitor:SetScript("OnEvent", function(_, eventName)
     if eventName == "PLAYER_REGEN_DISABLED" then
       ClearOverrideBindings(clicker)
-    end
-    ClearOverrideBindings(stopTargeting)
-    ClearOverrideBindings(clearCursorButton)
+    elseif not InCombatLockdown() then
+      ClearOverrideBindings(stopTargeting)
+      ClearOverrideBindings(clearCursorButton)
 
-    if eventName == "CURSOR_CHANGED" and GetCursorInfo() == "item" then
-      SetOverrideBindingClick(clearCursorButton, true, "PAD2", clearCursorButton:GetName())
+      if not InCombatLockdown() and eventName == "CURSOR_CHANGED" and GetCursorInfo() == "item" then
+        SetOverrideBindingClick(clearCursorButton, true, "PAD2", clearCursorButton:GetName())
+      end
     end
   end)
 end
