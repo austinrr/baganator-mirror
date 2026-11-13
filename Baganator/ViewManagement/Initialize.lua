@@ -114,16 +114,14 @@ local function SetupBackpackHooks()
     local stack = debugstack()
     -- Check to ensure we're not opening when OpenClose.lua will handle the
     -- auto-open and auto-close
-    if stack:match("OpenAllBags") or stack:match("CloseAllBags") then
+    if stack:match("OpenAllBags") or stack:match("CloseAllBags") or stack:match("Radial") then
       return
     end
     ToggleBackpackView()
   end
 
-  if not addonTable.Constants.IsGamepadInUse then
-    hooksecurefunc("ToggleBackpack", DirectToggleOnly)
-    hooksecurefunc("ToggleBag", DirectToggleOnly)
-  end
+  hooksecurefunc("ToggleBackpack", DirectToggleOnly)
+  hooksecurefunc("ToggleBag", DirectToggleOnly)
   ToggleAllBags = ToggleBackpackView
   if addonTable.Constants.IsGamepadInUse then
     hooksecurefunc("ToggleBackpack_Combined", function()
