@@ -648,7 +648,9 @@ function BaganatorRetailLiveContainerItemButtonMixin:SetItemDetails(cacheData)
 
   self:UpdateExtended();
   self:UpdateJunkItem(quality, noValue);
-  self:SetReadable(readable);
+  if not addonTable.Constants.IsGamepadInUse then -- This taints the SmartNav, so we skip it
+    self:SetReadable(readable);
+  end
   self:SetMatchesSearch(true)
   self.Cooldown:Hide()
 
@@ -750,7 +752,7 @@ function BaganatorRetailLiveContainerItemButtonMixin:ClearNewItem()
 end
 
 local clicker = CreateFrame("Button", "BaganatorItemButtonClicker", UIParent, "SecureActionButtonTemplate")
-clicker:SetAttribute("type", "item")
+clicker:SetAttribute("type2", "click")
 clicker:RegisterForClicks("AnyDown")
 local stopTargeting = CreateFrame("Button", "BaganatorItemButtonStopTargeting", UIParent, "SecureActionButtonTemplate")
 stopTargeting:SetAttribute("type1", "stop")
@@ -788,8 +790,8 @@ function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavSelect()
   if InCombatLockdown() or not self.BGR or not self.BGR.itemLink then
     return
   end
-  clicker:SetAttribute("item", self:GetParent():GetID() .. " " .. self:GetID())
-  SetOverrideBindingClick(clicker, true, "PAD3", clicker:GetName(), "LeftButton")
+  clicker:SetAttribute("clickbutton2", self)
+  SetOverrideBindingClick(clicker, true, "PAD3", clicker:GetName(), "RightButton")
 end
 
 function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavDeselect()

@@ -70,8 +70,7 @@ local function SetupBackpackHooks()
     if not characterName then
       return
     end
-    ShowUIPanel(backpackView)
-    --backpackView:Show()
+    backpackView:Show()
     backpackView:UpdateForCharacter(characterName, characterName == Syndicator.API.GetCurrentCharacter())
     UpdateBackpackButtons()
   end)
