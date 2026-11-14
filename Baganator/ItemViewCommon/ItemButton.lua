@@ -757,24 +757,57 @@ function BaganatorRetailLiveContainerItemButtonMixin:ClearNewItem()
   end
 end
 
-local clicker = CreateFrame("Button", "BaganatorItemButtonClicker", UIParent, "SecureActionButtonTemplate")
-clicker:SetAttribute("type2", "click")
-clicker:RegisterForClicks("AnyDown")
-local stopTargeting = CreateFrame("Button", "BaganatorItemButtonStopTargeting", UIParent, "SecureActionButtonTemplate")
-stopTargeting:SetAttribute("type1", "stop")
-stopTargeting:RegisterForClicks("AnyDown", "AnyUp")
-local clearCursorButton = CreateFrame("Button", "BaganatorItemButtonClearCursor", UIParent)
-clearCursorButton:SetScript("OnClick", function()
-  ClearCursor()
-end)
-
-clicker:HookScript("OnClick", function()
-  if SpellIsTargeting() then
-    SetOverrideBindingClick(stopTargeting, true, "PAD2", stopTargeting:GetName())
-  end
-end)
-
 if addonTable.Constants.IsGamepadInUse then
+  local clicker = CreateFrame("Button", "BaganatorItemButtonClicker", UIParent, "SecureActionButtonTemplate")
+  clicker:SetAttribute("type2", "click")
+  clicker:RegisterForClicks("AnyDown")
+  local stopTargeting = CreateFrame("Button", "BaganatorItemButtonStopTargeting", UIParent, "SecureActionButtonTemplate")
+  stopTargeting:SetAttribute("type1", "stop")
+  stopTargeting:RegisterForClicks("AnyDown", "AnyUp")
+  local clearCursorButton = CreateFrame("Button", "BaganatorItemButtonClearCursor", UIParent)
+  clearCursorButton:SetScript("OnClick", function()
+    ClearCursor()
+  end)
+  local openMenuButton = CreateFrame("Button", "BaganatorItemButtonMenu", UIParent)
+  openMenuButton:SetScript("OnClick", function()
+    local focus = itemButtonFocus
+    addonTable.ItemViewCommon.ShowGamepadMenu(focus.frame, {"BOTTOMRIGHT", focus.frame, "BOTTOMLEFT"}, {
+      {
+        label = CONTEXT_ACTION_LABEL_SPLIT_ITEM_STACK,
+        callback = function()
+          local info = C_Container.GetContainerItemInfo(focus.bag, focus.slot);
+          local itemCount = info and info.stackCount;
+          local locked = info and info.isLocked;
+          if ((not locked) and itemCount and (itemCount > 1)) then
+            local currentButton = focus.frame
+            currentButton.SplitStack = function(button, split)
+              C_Container.SplitContainerItem(button:GetBagID(), button:GetID(), split);
+            end
+            StackSplitFrame:OpenStackSplitFrame(itemCount, currentButton, "BOTTOMRIGHT", "TOPRIGHT");
+            ShowUIPanel(StackSplitFrame);
+          else
+            UIErrorsFrame:AddMessage(addonTable.Locales.NO_STACK_TO_SPLIT, 1.0, 0.1, 0.1, 1.0)
+          end
+        end
+      },
+      {
+        label = CONTEXT_ACTION_LABEL_DESTROY_ITEM,
+        callback = function()
+          addonTable.Dialogs.ShowConfirm(DELETE_ITEM:format(focus.frame.BGR.itemLink:gsub("[%[%]]", "")), YES, NO, function()
+            C_Container.PickupContainerItem(focus.bag, focus.slot)
+            DeleteCursorItem()
+          end)
+        end
+      },
+    })
+  end)
+
+  clicker:HookScript("OnClick", function()
+    if SpellIsTargeting() then
+      SetOverrideBindingClick(stopTargeting, true, "PAD2", stopTargeting:GetName())
+    end
+  end)
+
   local monitor = CreateFrame("Frame")
   monitor:RegisterEvent("PLAYER_REGEN_DISABLED")
   monitor:RegisterEvent("CURSOR_CHANGED")
@@ -790,25 +823,22 @@ if addonTable.Constants.IsGamepadInUse then
       end
     end
   end)
-end
 
-function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavSelect()
-  if InCombatLockdown() or not self.BGR or not self.BGR.itemLink then
-    return
+  function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavSelect()
+    if InCombatLockdown() or not self.BGR or not self.BGR.itemLink then
+      return
+    end
+    clicker:SetAttribute("clickbutton2", self)
+    SetOverrideBindingClick(clicker, true, "PAD3", clicker:GetName(), "RightButton")
+    SetOverrideBindingClick(clicker, true, "PAD4", openMenuButton:GetName())
+    itemButtonFocus = {index = self.gamepadIndex, slot = self:GetID(), bag = self:GetParent():GetID(), frame = self}
   end
-  clicker:SetAttribute("clickbutton2", self)
-  SetOverrideBindingClick(clicker, true, "PAD3", clicker:GetName(), "RightButton")
-  if self.gamepadIndex then
-    itemButtonFocus = {index = self.gamepadIndex, slot = self:GetID(), bag = self:GetParent():GetID()}
-  end
-end
 
-function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavDeselect()
-  if InCombatLockdown() then
-    return
-  end
-  ClearOverrideBindings(clicker)
-  if self.gamepadIndex then
+  function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavDeselect()
+    if InCombatLockdown() then
+      return
+    end
+    ClearOverrideBindings(clicker)
     itemButtonFocus = nil
   end
 end

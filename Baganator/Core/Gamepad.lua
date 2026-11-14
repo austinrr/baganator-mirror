@@ -1,6 +1,6 @@
 local addonTable = select(2, ...)
 
-local buttonMapping = {
+addonTable.Gamepad.ButtonMapping = {
   ["A"] = "PAD1",
   ["B"] = "PAD2",
   ["X"] = "PAD3",
@@ -28,13 +28,13 @@ if addonTable.Constants.IsGamepadInUse then
   function addonTable.Gamepad.ResetAssociations(button)
     SmartNavigation_ClearJumpNavigationOverrides(button)
   end
-  function addonTable.Gamepad.AnnounceShow(frame, isPopup)
+  function addonTable.Gamepad.AnnounceShow(frame, isPopup, shouldFocus)
     C_Timer.After(0, function()
-      GamepadMode.FrameControlsManager:FrameShown(frame, nil, isPopup)
+      GamepadMode.FrameControlsManager:FrameShown(frame, isPopup, shouldFocus)
     end)
   end
   function addonTable.Gamepad.AnnounceHide(frame, isPopup)
-    GamepadMode.FrameControlsManager:FrameHidden(frame, nil, isPopup)
+    GamepadMode.FrameControlsManager:FrameHidden(frame)
   end
 
   function addonTable.Gamepad.SetTargetButton(frame, target)

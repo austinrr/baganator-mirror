@@ -464,6 +464,9 @@ function addonTable.CategoryViews.BagLayoutMixin:Display(bagWidth, bagIndexes, b
         label.index = index
         label.source = details.source
         label.sourceKey = details.sourceKey
+        label.index = index .. "_" .. bagIndexes[1]
+        layout.associatedLabel = label
+        addonTable.Gamepad.ResetAssociations(label)
         container.layoutsBySourceKey[details.sourceKey] = layout
         activeLabels[index] = label
         layout.type = details.type

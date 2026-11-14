@@ -2,9 +2,9 @@
 local addonTable = select(2, ...)
 
 function addonTable.CategoryViews.ComputeGamepadGrid(layouts, upButton, bottomLeftButtons, bottomRightCallback)
-  local iconPadding, iconSize = addonTable.ItemButtonUtil.GetPaddingAndSize()
-  local iconSpace = iconSize + iconPadding
-  local categorySpacing = addonTable.Config.Get(addonTable.Config.Options.CATEGORY_HORIZONTAL_SPACING) * iconSpace
+  if not addonTable.Constants.IsGamepadInUse then
+    return
+  end
 
   local grid = {}
   local inputRow = 0
@@ -31,8 +31,12 @@ function addonTable.CategoryViews.ComputeGamepadGrid(layouts, upButton, bottomLe
         cols[row] = 2
       elseif l.type == "category" then
         local categoryExtraRows = 0
-        local lastCategoryRow = 1
+        local lastCategoryRow = 0
         local offset = cols[row]
+
+        grid[row][cols[row]] = l.associatedLabel
+        cols[row] = cols[row] + 1
+
         local maxCol = 1
         for _, b in ipairs(l.buttons) do
           if b.position.y ~= lastCategoryRow then

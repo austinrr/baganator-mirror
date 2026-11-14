@@ -24,6 +24,7 @@ function BaganatorItemViewCommonBackpackViewMixin:OnLoad()
   if addonTable.Constants.IsGamepadInUse then
     self.layoutType = "ButtonFrameTemplateNoPortrait"
     self.FrameGlow = CreateFrame("Frame", nil, self, "FrameGlowTemplate")
+    self.FrameGlow:Hide()
   end
   for _, b in ipairs(self.AllFixedButtons) do
     addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget)
@@ -147,13 +148,14 @@ function BaganatorItemViewCommonBackpackViewMixin:OnShow()
     end)
   end
   PlaySound(SOUNDKIT.IG_BACKPACK_OPEN);
-  addonTable.Gamepad.AnnounceShow(self)
+  addonTable.Gamepad.AnnounceShow(self, false, not addonTable.ItemViewCommon.WasAutoOpened())
   self.showing = true
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:OnHide()
   PlaySound(SOUNDKIT.IG_BACKPACK_CLOSE);
   addonTable.Gamepad.AnnounceHide(self)
+  addonTable.CallbackRegistry:TriggerEvent("BagHidden")
 end
 
 function BaganatorItemViewCommonBackpackViewMixin:SetLiveCharacter(character)

@@ -1,7 +1,7 @@
 ## Interface: 120100, 120105, 16001, 50504, 38001, 20506, 11509
 ## ExcludeLoadGameType: wowhack
 ## Title: Baganator
-## Version: 856
+## Version: 857
 ## Author: plusmouse
 ## OptionalDeps: Syndicator, Masque
 ## SavedVariables: BAGANATOR_CONFIG, BAGANATOR_DATA
@@ -100,6 +100,7 @@ ItemViewCommon\NewItemsTracking.lua
 ItemViewCommon\AnchorSetter.lua
 ItemViewCommon\ShowBlizzardBagPreferences.lua
 ItemViewCommon\LinkGamepadGrid.lua
+ItemViewCommon\GamepadMenu.lua
 ItemViewCommon\Initialize.lua
 
 SingleViews\Pools.lua

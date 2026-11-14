@@ -52,8 +52,7 @@ addonTable.Constants.Events = {
   "CurrencyPanelToggle",
   "CurrencyPanelHide",
   "RefreshStateChange",
-
-  "CloseAll",
+  "BagHidden",
 
   "ViewComplete",
   "BagCacheAfterNewItemsUpdate",
