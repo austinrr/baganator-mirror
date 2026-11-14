@@ -486,6 +486,13 @@ local function HideDefaultBank()
     EventRegistry:UnregisterCallback("BankPanelMixin.ShowOrHideBagCost", BankFrame);
     EventRegistry:UnregisterCallback("BankPanelMixin.PageInfoChanged", BankFrame);
   end
+  if addonTable.Constants.IsGamepadInUse then -- Prevent bank frame stealing focus
+    EventRegistry:RegisterCallback("UIParentPanelManager.ShowUIPanel", function(_, frame)
+      if frame == BankFrame then
+        addonTable.Gamepad.AnnounceHide(BankFrame)
+      end
+    end)
+  end
 end
 
 local function SetupCharacterSelect(frameGroup)

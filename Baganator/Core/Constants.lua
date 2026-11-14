@@ -69,6 +69,8 @@ addonTable.Constants.Events = {
   "CategoryAddItemStart",
   "CategoryAddItemEnd",
 
+  "GamepadItemButtonFocus",
+
   "ForceClearedNewItems",
 
   "BackpackFrameChanged",

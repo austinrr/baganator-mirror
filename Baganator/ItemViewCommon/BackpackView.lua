@@ -29,7 +29,12 @@ function BaganatorItemViewCommonBackpackViewMixin:OnLoad()
     addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget)
   end
   for _, b in ipairs(self.TopButtons) do
-    addonTable.Gamepad.LinkButtons(b, "Down", self.SearchWidget.SearchBox)
+    addonTable.Gamepad.OneWayLink(b, "Down", self.SearchWidget.SearchBox)
+  end
+  addonTable.Gamepad.LinkButtons(self.ToggleBankButton, "Down", self.SearchWidget.SearchBox)
+  if addonTable.Constants.IsGamepadInUse then
+    self.CloseButton:Hide()
+    self.CustomiseButton:SetPoint("TOPRIGHT", -5, 0)
   end
 
   self.liveItemButtonPool = addonTable.ItemViewCommon.GetLiveItemButtonPool(self)

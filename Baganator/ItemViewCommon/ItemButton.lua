@@ -3,6 +3,12 @@ local addonTable = select(2, ...)
 
 addonTable.ItemButtonUtil = {}
 
+local itemButtonFocus
+
+function addonTable.ItemButtonUtil.GetGamepadFocus()
+  return itemButtonFocus
+end
+
 local itemCallbacks = {}
 local iconSettings = {}
 
@@ -768,7 +774,7 @@ clicker:HookScript("OnClick", function()
   end
 end)
 
-do
+if addonTable.Constants.IsGamepadInUse then
   local monitor = CreateFrame("Frame")
   monitor:RegisterEvent("PLAYER_REGEN_DISABLED")
   monitor:RegisterEvent("CURSOR_CHANGED")
@@ -792,6 +798,9 @@ function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavSelect()
   end
   clicker:SetAttribute("clickbutton2", self)
   SetOverrideBindingClick(clicker, true, "PAD3", clicker:GetName(), "RightButton")
+  if self.gamepadIndex then
+    itemButtonFocus = {index = self.gamepadIndex, slot = self:GetID(), bag = self:GetParent():GetID()}
+  end
 end
 
 function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavDeselect()
@@ -799,6 +808,9 @@ function BaganatorRetailLiveContainerItemButtonMixin:OnSmartNavDeselect()
     return
   end
   ClearOverrideBindings(clicker)
+  if self.gamepadIndex then
+    itemButtonFocus = nil
+  end
 end
 
 BaganatorRetailLiveGuildItemButtonMixin = {}
