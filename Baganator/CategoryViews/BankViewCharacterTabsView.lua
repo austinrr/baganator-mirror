@@ -143,10 +143,6 @@ function BaganatorCategoryViewBankViewCharacterTabsViewMixin:ShowTab(character, 
 
     self.refreshState = {}
 
-    addonTable.CategoryViews.ComputeGamepadGrid(self.activeLayouts, self.SearchWidget.SearchBox, {self.DepositReagentsButton:IsShown() and self.DepositReagentsButton or nil}, function(b)
-      self.CurrencyWidget:AddGamepadUp(b)
-    end)
-
     addonTable.CallbackRegistry:TriggerEvent("ViewComplete")
 
     self:GetParent():OnTabFinished(firstVisible, lastVisible)
