@@ -2,7 +2,6 @@
 local addonTable = select(2, ...)
 
 function addonTable.ItemViewCommon.LinkGamepadGrid(grid, maxRows, maxCols, upButton, bottomLeftButtons, bottomRightCallback)
-  print(maxRows, maxCols)
   for y = 1, maxRows do
     for x = 1, maxCols do
       if grid[y][x] then
