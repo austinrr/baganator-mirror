@@ -126,8 +126,6 @@ function BaganatorItemViewCommonBankViewCharacterTabsViewMixin:OnLoad()
     GameTooltip:Hide()
   end)
 
-  self.ToggleAllCharacters:SetPoint("TOPLEFT", self, addonTable.Constants.ButtonFrameOffset, -1 + addonTable.Constants.ButtonFrameOffsetTop)
-
   addonTable.Skins.AddFrame("SideTabButton", self.purchaseButton)
   addonTable.Skins.AddFrame("Button", self.DepositReagentsButton)
 end
