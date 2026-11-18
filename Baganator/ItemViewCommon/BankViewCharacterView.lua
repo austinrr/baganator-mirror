@@ -43,7 +43,7 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:OnLoad()
     end
 
     if self:IsVisible() then
-      self:UpdateForCharacter(self.lastCharacter, self.isLive)
+      self:GetParent():UpdateView()
     end
   end)
 
@@ -83,9 +83,6 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:OnLoad()
 
   self.ToggleAllCharacters:SetPoint("TOPLEFT", self, addonTable.Constants.ButtonFrameOffset, -1 + addonTable.Constants.ButtonFrameOffsetTop)
 
-  addonTable.Skins.AddFrame("Button", self.DepositIntoReagentsBankButton)
-  addonTable.Skins.AddFrame("Button", self.BuyReagentBankButton)
-
   self:SetLiveCharacter(Syndicator.API.GetCurrentCharacter())
 end
 
@@ -97,20 +94,10 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:SetLiveCharacter(char
   self.liveCharacter = character
 end
 
-function BaganatorItemViewCommonBankViewCharacterViewMixin:BuyReagentBank(character)
-  addonTable.Dialogs.ShowMoney(CONFIRM_BUY_REAGNETBANK_TAB, GetReagentBankCost(), YES, NO, function()
-    BuyReagentBank();
-  end)
-end
-
 function BaganatorItemViewCommonBankViewCharacterViewMixin:DoSort(isReverse)
   local indexesToUse = {}
   for index in ipairs(Syndicator.Constants.AllBankIndexes) do
     indexesToUse[index] = true
-  end
-  -- Ignore reagent bank if it isn't purchased
-  if addonTable.Constants.IsRetail and not IsReagentBankUnlocked() then
-    indexesToUse[tIndexOf(Syndicator.Constants.AllBankIndexes, Enum.BagIndex.Reagentbank)] = nil
   end
   local bagChecks = addonTable.Sorting.GetBagUsageChecks(Syndicator.Constants.AllBankIndexes)
 
@@ -191,6 +178,11 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:UpdateForCharacter(ch
     self:GetParent():SetTitle(addonTable.Locales.XS_BANK:format(characterData.details.character))
   end
 
+  self:GetParent().ButtonsManager:AddButton("topLeft", "allCharacters")
+  self:GetParent().ButtonsManager:AddButton("topLeft", "bagSlots", function()
+    self:ToggleBagSlots()
+  end)
+
   self.searchToApply = self.searchToApply or self.refreshState[addonTable.Constants.RefreshReason.Searches] or self.refreshState[addonTable.Constants.RefreshReason.ItemData] or self.refreshState[addonTable.Constants.RefreshReason.ItemWidgets]
 
   local oldLast = self.lastCharacter
@@ -223,11 +215,6 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:UpdateForCharacter(ch
   if self.BankMissingHint:IsShown() then
     self.BankMissingHint:SetText(addonTable.Locales.BANK_DATA_MISSING_HINT:format(characterData.details.character))
   end
-
-  local searchText = self:GetParent().SearchWidget.SearchBox:GetText()
-
-  self.DepositIntoReagentsBankButton:SetShown(self.isLive and addonTable.Constants.IsRetail and not Syndicator.Constants.CharacterBankTabsActive and IsReagentBankUnlocked())
-  self.BuyReagentBankButton:SetShown(self.isLive and addonTable.Constants.IsRetail and not Syndicator.Constants.CharacterBankTabsActive and not IsReagentBankUnlocked())
 
   if self.CurrencyWidget.lastCharacter ~= self.lastCharacter then
     self.CurrencyWidget:UpdateCurrencies(character)

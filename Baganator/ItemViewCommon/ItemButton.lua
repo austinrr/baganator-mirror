@@ -771,7 +771,7 @@ if addonTable.Constants.IsGamepadInUse then
   local openMenuButton = CreateFrame("Button", "BaganatorItemButtonMenu", UIParent)
   openMenuButton:SetScript("OnClick", function()
     local focus = itemButtonFocus
-    addonTable.ItemViewCommon.ShowGamepadMenu(focus.frame, {"BOTTOMRIGHT", focus.frame, "BOTTOMLEFT"}, {
+    local entries = {
       {
         label = CONTEXT_ACTION_LABEL_SPLIT_ITEM_STACK,
         enabled = C_Item.GetStackCount(focus.frame.BGR.itemLocation) > 1,
@@ -800,7 +800,14 @@ if addonTable.Constants.IsGamepadInUse then
           end)
         end
       },
-    })
+    }
+    if UnitClassBase("player") == "HUNTER" and UnitExists("pet") and C_Spell.IsSpellUsable(6991) and C_PetInfo.CanPetEatItem(focus.frame.BGR.itemID) then
+      table.insert(entries, 1, {
+        label = CONTEXT_ACTION_LABEL_FEED_TO_PET,
+        macro = "/cast " .. C_Spell.GetSpellName(6991) .. "\n/use " .. C_Item.GetItemNameByID(focus.frame.BGR.itemID)
+      })
+    end
+    addonTable.ItemViewCommon.ShowGamepadMenu(focus.frame, {"BOTTOMRIGHT", focus.frame, "BOTTOMLEFT"}, entries)
   end)
 
   clicker:HookScript("OnClick", function()
