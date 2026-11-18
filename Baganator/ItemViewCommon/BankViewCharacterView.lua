@@ -81,8 +81,6 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:OnLoad()
     end
   end)
 
-  self.ToggleAllCharacters:SetPoint("TOPLEFT", self, addonTable.Constants.ButtonFrameOffset, -1 + addonTable.Constants.ButtonFrameOffsetTop)
-
   self:SetLiveCharacter(Syndicator.API.GetCurrentCharacter())
 end
 
@@ -207,7 +205,6 @@ function BaganatorItemViewCommonBankViewCharacterViewMixin:UpdateForCharacter(ch
 
   self.BagSlots:Update(character, self.isLive)
   local containerInfo = characterData.containerInfo
-  self.ToggleBagSlotsButton:SetShown(self.isLive or (containerInfo and containerInfo.bank))
 
   self.BankMissingHint:SetShown(characterData.bank[1] == nil or #characterData.bank[1] == 0)
   self:GetParent().SearchWidget:SetShown(addonTable.Config.Get(addonTable.Config.Options.SHOW_SEARCH_BOX) and characterData.bank[1] and #characterData.bank[1] ~= 0)

@@ -102,7 +102,7 @@ local function SkinContainerFrame(frame, topButtons, topRightButtons)
   local lastButtonsEnd
   if frame.ButtonsManager then
     hooksecurefunc(frame.ButtonsManager, "Arrange", function()
-      lastButtonsEnd = UpdateFrameButtons(frame, frame.ButtonsManager.active.topLeft, frame.ButtonsManager.topRight)
+      lastButtonsEnd = UpdateFrameButtons(frame, frame.ButtonsManager.active.topLeft, frame.ButtonsManager.active.topRight)
       local missingHeight = lastButtonsEnd - frame:GetHeight()
       if missingHeight > 0 then
         frame:SetHeight(frame:GetHeight() + missingHeight)

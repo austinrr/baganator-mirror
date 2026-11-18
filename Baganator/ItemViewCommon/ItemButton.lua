@@ -801,10 +801,21 @@ if addonTable.Constants.IsGamepadInUse then
         end
       },
     }
-    if UnitClassBase("player") == "HUNTER" and UnitExists("pet") and C_Spell.IsSpellUsable(6991) and C_PetInfo.CanPetEatItem(focus.frame.BGR.itemID) then
-      table.insert(entries, 1, {
+    local offset = 1
+    local feedPet = 6991
+    if UnitClassBase("player") == "HUNTER" and UnitExists("pet") and C_Spell.IsSpellUsable(feedPet) and C_PetInfo.CanPetEatItem(focus.frame.BGR.itemID) then
+      table.insert(entries, offset, {
         label = CONTEXT_ACTION_LABEL_FEED_TO_PET,
-        macro = "/cast " .. C_Spell.GetSpellName(6991) .. "\n/use " .. C_Item.GetItemNameByID(focus.frame.BGR.itemID)
+        macro = "/cast " .. C_Spell.GetSpellName(feedPet) .. "\n/use " .. C_Item.GetItemNameByID(focus.frame.BGR.itemID)
+      })
+      offset = offset + 1
+    end
+    local disenchant = 13262
+    if focus.frame.BGR.quality >= Enum.ItemQuality.Uncommon and C_Spell.IsSpellUsable(disenchant) and C_SpellBook.IsSpellKnown(disenchant) then
+      local label = C_Spell.GetSpellName(disenchant)
+      table.insert(entries, 1 + offset, {
+        label = label,
+        macro = "/cast " .. label .. "\n/use " .. focus.bag .. " " .. focus.slot
       })
     end
     addonTable.ItemViewCommon.ShowGamepadMenu(focus.frame, {"BOTTOMRIGHT", focus.frame, "BOTTOMLEFT"}, entries)
